@@ -1,5 +1,8 @@
-#!/bin/bash
+    #!/bin/bash
 # The logic to start up your application should be put in this
 # script. The application will work only if it binds to
 # $OPENSHIFT_DIY_IP:8080
-nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy |& /usr/bin/logshifter -tag diy &
+
+#nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy |& /usr/bin/logshifter -tag diy &
+export MAVEN_OPTS="-Xmx1024M -XX:MaxPermSize=256M"
+nohup java -Xmx1g -jar $OPENSHIFT_REPO_DIR/target/org.apache.stanbol.launchers.full-*-SNAPSHOT.jar $OPENSHIFT_REPO_DIR/src/main/ > $OPENSHIFT_DIY_DIR/logs/server.log 2>&1 &
